@@ -1,0 +1,78 @@
+THIS REPOSITORY REPRESENTS A WORK IN PROGRESS.  UNLESS YOU KNOW WHAT
+YOU ARE DOING, WE RECOMMEND THAT YOU MAKE NO ATTEMPT TO CLONE THIS
+REPOSITORY AND CERTAINLY NO ATTEMPT TO BUILD THE FINAL DOCUMENT.
+
+Ultimately, this repository is meant to contain a specification of an
+improvement of the Common Lisp standard.  The new language is called
+"Well Specified Common Lisp".  It will be abbreviated WSCL, and it
+should be pronounced like "whistle".
+
+The objective of this work is that a conforming implementation of WSCL
+is also a conforming implementation of the Common Lisp standard.
+Furthermore, most of the improvements will be such that a modern
+conforming implementation of WSCL will already be a conforming
+implementation of WSCL, or will require relatively few modifications
+in order to become one.
+
+This objective may sound too modest to be of any importance, but in
+fact that is not the case.  The fact is that the Common Lisp standard
+allows considerable freedom for conforming implementations.  Often,
+this freedom takes the form of some behavior being unspecified or
+undefined.  There might be several reasons for the Common Lisp
+standard to allow this freedom.  One reason was no doubt for backward
+compatibility with existing Lisp implementations.  Another was
+probably uncertainty as to whether a more strict specification might
+harm performance.
+
+Since the Common Lisp standard was created, there have been
+significant improvements in language implementation resulting from
+research in this domain, and also significant improvements in the
+capability of processors.  Furthermore, since the creation of the
+standard, many high-quality Common Lisp implementations have been
+created, and those implementations are now the norm, so that
+considerations of backward compatibility should be discussed relative
+to those implementations rather then Lisp systems that preceded them.
+
+For this work, we aim to proceed as follows:
+
+* We start with the dpANS document of the draft specification of the
+  Common Lisp language.  This document is written in plain TeX, and is
+  design so that each chapter can be compiled separately.
+
+* We convert this document to a single LaTeX document, using
+  semi-automatic and manual techniques.  We make sure that semantic
+  markup is preserved or improved.  We isolate macros for typographic
+  markup from macros for semantic markup.  And we create new
+  categories of LaTeX markup that will simplify the ultimate parsing
+  of the final LaTeX sources into other formats such as HTML.
+
+* We may eliminate some typographical markup that interferes with
+  semantic markup, especially when the aesthetic value of the
+  typographical markup is dubious.
+
+* We create a Unix Makefile that creates a PDF file of the complete
+  document. 
+
+When all this work is done, we can proceed with the improvements.
+
+* For each modified paragraph, we move the original paragraph to a
+  so-called "end note", for which there is an available LaTeX
+  package.  This way, it becomes easy to see that a paragraph differs
+  from the original and it becomes easy to consult the original
+  paragraph.  If only a small subset of the sentences in a paragraph
+  have been modified, the note may contain only the modified
+  sentences.
+
+* New paragraphs are marked as such so that it is visually obvious
+  that such a paragraph does not exist in the original Common Lisp
+  standard.
+
+Even though using LaTeX is definitely not ideal for creating a new
+standard, we decided to use it nevertheless, rather than any of a
+dozen or so alternatives for the following reasons:
+
+* It has all the functionality we need, including software for
+  correctly formatting bibliography references.
+
+* Since the dpANS is written in TeX, most of the text can be included
+  without modification, at least in an initial version.
