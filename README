@@ -37,7 +37,7 @@ For this work, we aim to proceed as follows:
 
 * We start with the dpANS document of the draft specification of the
   Common Lisp language.  This document is written in plain TeX, and is
-  design so that each chapter can be compiled separately.
+  designed so that each chapter can be compiled separately.
 
 * We convert this document to a single LaTeX document, using
   semi-automatic and manual techniques.  We make sure that semantic
