@@ -5,3 +5,7 @@
 *.log
 *.out
 *.pdf
+*.fig
+*.iss
+*.ref
+*.sec
