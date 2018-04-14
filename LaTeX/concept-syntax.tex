@@ -9,16 +9,15 @@ The \term{Lisp reader} takes \term{characters} from a \term{stream},
 interprets them as a printed representation of an \term{object},
 constructs that \term{object}, and returns it.
 
-\DefineSection{TheStandardSyntax}
 The syntax described by this chapter is called the \newterm{standard syntax}.
-Operations are provided by \clisp\ so that
+Operations are provided by \commonlisp{} so that
 various aspects of the syntax information represented by a \term{readtable} 
-can be modified under program control; \seechapter\Reader.
+can be modified under program control; \seeChap{chapter-reader}
 Except as explicitly stated otherwise, 
 the syntax used throughout this document is \term{standard syntax}.
 
-\beginSubsection{Readtables}
-\DefineSection{Readtables}
+\subsection{Readtables}
+\label{subsection-character-syntax-readtables}
 
 Syntax information for use by the \term{Lisp reader} is embodied in an
 \term{object} called a \newterm{readtable}.  Among other things, 
@@ -37,8 +36,7 @@ make-dispatch-macro-character&set-syntax-from-char\cr
 }
 
 
-\beginsubsubsection{The Current Readtable}
-\DefineSection{CurrentReadtable}
+\subsubsection{The Current Readtable}
 
 Several \term{readtables} describing different syntaxes can exist,
 but at any given time only one, called the \newterm{current readtable}, 
@@ -49,9 +47,7 @@ is \thevalueof{*readtable*} in that \term{environment}.
 To make a different \term{readtable} become the \term{current readtable},
 \varref{*readtable*} can be \term{assigned} or \term{bound}.
 
-\endsubsubsection%{The Current Readtable}
-
-\beginsubsubsection{The Standard Readtable}
+\subsubsection{The Standard Readtable}
 
 The \newterm{standard readtable} conforms to \term{standard syntax}.
 The consequences are undefined if an attempt is made
@@ -62,9 +58,7 @@ a copy of the \term{standard readtable} can be created; \seefun{copy-readtable}.
 
 The \term{readtable case} of the \term{standard readtable} is \kwd{upcase}.
 
-\endsubsubsection%{The Standard Readtable}
-
-\beginsubsubsection{The Initial Readtable}
+\subsubsection{The Initial Readtable}
 
 The \newterm{initial readtable} is
 the \term{readtable} that is the \term{current readtable}
@@ -75,12 +69,7 @@ from the \term{standard readtable}.
 It is permissible for a \term{conforming program} 
 to modify the \term{initial readtable}.
 
-\endsubsubsection%{The Initial Readtable}
-
-\endSubsection%{Readtables}
-
-\beginsubsection{Variables that affect the Lisp Reader}
-\DefineSection{ReaderVars}
+\subsection{Variables that affect the Lisp Reader}
 
 The \term{Lisp reader} is influenced not only by the \term{current readtable},
 but also by various \term{dynamic variables}.  \Thenextfigure\ lists
@@ -91,14 +80,11 @@ the \term{variables} that influence the behavior of the \term{Lisp reader}.
 *read-base*&*read-suppress*&\cr
 }
 
-\endsubsection%{Variables that affect the Lisp Reader}
-
-\beginSubsection{Standard Characters}
-\DefineSection{StandardChars}
+\subsection{Standard Characters}
 
 %% Redundant.
-% \clisp\ \term{characters} are used for writing programs 
-% that can be read by a \clisp\ implementation, and for data.
+% \commonlisp{} \term{characters} are used for writing programs 
+% that can be read by a \commonlisp{} implementation, and for data.
 \issue{CHARACTER-PROPOSAL:2-2-1}
 All \term{implementations} must support a \term{character} \term{repertoire}
 called \typeref{standard-char}; \term{characters} that are members of that
@@ -225,12 +211,9 @@ Note that the first letter of the graphic ID
 categorizes the character as follows:
 L---Latin, N---Numeric, S---Special.
 
-\endSubsection%{Standard Characters}
-
 \endissue{CHARACTER-PROPOSAL:2-2-1}
 
-\beginSubsection{Character Syntax Types}
-\DefineSection{CharacterSyntaxTypes}
+\subsection{Character Syntax Types}
 
 %% 22.1.1 1
 
@@ -311,7 +294,7 @@ The characters marked with an asterisk (*) are initially \term{constituents},
 % question mark (\f{?}),
 % and exclamation point (\f{!})
 % are defined to be constituents, 
-but they are not used in any standard \clisp\ notations.
+but they are not used in any standard \commonlisp{} notations.
 %!!! Maybe make a glossary term out of "reserved to the programmer"
 %    and discuss the issue of who the "programmer" is in the face of
 %    cascaded/layered/embedded implementations, some of which are conforming
@@ -319,7 +302,7 @@ but they are not used in any standard \clisp\ notations.
 These characters are explicitly reserved to the \term{programmer}.
 \f{~} is not used in \clisp, and reserved to implementors.
 \f{\$} and \f{\%} are \term{alphabetic}\meaning{2} \term{characters},
-but are not used in the names of any standard \clisp\ \term{defined names}.
+but are not used in the names of any standard \commonlisp{} \term{defined names}.
 
 \term{Whitespace}\meaning{2} characters serve as separators but are otherwise
 ignored.  \term{Constituent} and \term{escape} \term{characters} are accumulated
@@ -331,8 +314,7 @@ user-supplied) that can perform arbitrary parsing actions.
 depending on whether or not they terminate a \term{token}.
 The following are descriptions of each kind of \term{syntax type}.
 
-\beginsubsubsection{Constituent Characters}
-\DefineSection{ConstituentChars}
+\subsubsection{Constituent Characters}
 
 \term{Constituent} \term{characters} are used in \term{tokens}.
 %% Sandra didn't like this wording, and wanted "representation of" added. -kmp 19-Nov-91
@@ -347,12 +329,11 @@ letters in the opposite \term{case} when the name is read;
 \term{Case} conversion can be suppressed by the use 
 of \term{single escape} or \term{multiple escape} characters.
 %% Moved to the section "Case in Symbols" -kmp 25-Jan-92
-% The \term{symbols} that correspond to \clisp\ \term{defined names}
+% The \term{symbols} that correspond to \commonlisp{} \term{defined names}
 % have uppercase names even though their names generally appear
 % in lowercase in this document.
 
-\beginsubsubsection{Constituent Traits}
-\DefineSection{ConstituentTraits}
+\subsubsection{Constituent Traits}
 
 Every \term{character} has one or more \term{constituent traits}
 that define how the \term{character} is to be interpreted by the \term{Lisp reader}
@@ -447,12 +428,7 @@ or \term{multiple escape};
 these \term{constituent traits} apply to them only if their \term{syntax types} 
 are changed to \term{constituent}.
 
-\endsubsubsection%{Constituent Traits}
-
-\endsubsubsection%{Constituent Characters}
- 
-\beginsubsubsection{Invalid Characters}
-\DefineSection{InvalidChars}
+\subsubsection{Invalid Characters}
 
 \term{Characters} with the \term{constituent trait} \term{invalid} 
 cannot ever appear in a \term{token} 
@@ -462,10 +438,7 @@ being read, an error \oftype{reader-error} is signaled.
 If an \term{invalid} \term{character} is preceded by a \term{single escape} \term{character},
 it is treated as an \term{alphabetic}\meaning{2} \term{constituent} instead.
 
-\endsubsubsection%{Invalid Characters}
-
-\beginsubsubsection{Macro Characters}
-\DefineSection{MacroChars}
+\subsubsection{Macro Characters}
 
 When the \term{Lisp reader} encounters a \term{macro character} 
 on an \term{input} \term{stream},
@@ -528,10 +501,7 @@ For information about the \term{macro characters}
 that are available in \term{standard syntax},
 \seesection\StandardMacroChars.
 
-\endsubsubsection%{Macro Characters}
-
-\beginsubsubsection{Multiple Escape Characters}
-\DefineSection{MultipleEscapeChar}
+\subsubsection{Multiple Escape Characters}
 
 A pair of \newterm{multiple escape} \term{characters}
 is used to indicate that an enclosed sequence of characters,
@@ -545,7 +515,7 @@ that are to appear in the sequence must be preceded by a \term{single escape}
 \term{Vertical-bar} is a \term{multiple escape} \term{character}
 in \term{standard syntax}.
 
-\beginsubsubsubsection{Examples of Multiple Escape Characters}
+\subsubsubsection{Examples of Multiple Escape Characters}
 
 \code
  ;; The following examples assume the readtable case of *readtable* 
@@ -556,12 +526,7 @@ in \term{standard syntax}.
  (eq 'abc '|abc|) \EV \term{false}
 \endcode
 
-\endsubsubsubsection%{Examples of Multiple Escape Characters}
-
-\endsubsubsection%{Multiple Escape Characters}
-
-\beginsubsubsection{Single Escape Character}
-\DefineSection{SingleEscapeChar}
+\subsubsection{Single Escape Character}
 
 A \newterm{single escape} is used to indicate that 
 the next \term{character} is to be treated as 
@@ -575,7 +540,7 @@ or which \term{constituent traits} it has.
 %% -kmp 9-May-94
 \term{Backslash} is a \term{single escape} \term{character} in \term{standard syntax}.
 
-\beginsubsubsubsection{Examples of Single Escape Characters}
+\subsubsubsection{Examples of Single Escape Characters}
 
 \code
  ;; The following examples assume the readtable case of *readtable* 
@@ -586,19 +551,14 @@ or which \term{constituent traits} it has.
  (eq 'abc '\\abc) \EV \term{false}
 \endcode
 
-\endsubsubsubsection%{Examples of Single Escape Characters}
-
-\endsubsubsection%{Single Escape Character}
-
-\beginsubsubsection{Whitespace Characters}
-\DefineSection{WhitespaceChars}
+\subsubsection{Whitespace Characters}
 
 \term{Whitespace}\meaning{2} \term{characters} are used to separate \term{tokens}.
 
 \term{Space} and \term{newline} are \term{whitespace}\meaning{2} \term{characters}
 in \term{standard syntax}.
 
-\beginsubsubsubsection{Examples of Whitespace Characters}
+\subsubsubsection{Examples of Whitespace Characters}
 
 \code
  (length '(this-that)) \EV 1
@@ -608,9 +568,3 @@ in \term{standard syntax}.
  (+ 34) \EV 34
  (+ 3 4) \EV 7
 \endcode
-
-\endsubsubsubsection%{Examples of Whitespace Characters}
-
-\endsubsubsection%{Whitespace Characters}
-
-\endSubsection%{Character Syntax Types}
