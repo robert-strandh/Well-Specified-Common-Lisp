@@ -24,17 +24,21 @@ Syntax information for use by the \term{Lisp reader} is embodied in an
 the \term{readtable} contains the association between \term{characters} 
 and \term{syntax types}.
 
-\Thenextfigure\ lists some \term{defined names} that are applicable to
+\refFig{readtable-defined-names}
+lists some \term{defined names} that are applicable to
 \term{readtables}.
 
-\displaythree{Readtable defined names}{
-*readtable*&readtable-case\cr
-copy-readtable&readtablep\cr
-get-dispatch-macro-character&set-dispatch-macro-character\cr
-get-macro-character&set-macro-character\cr
-make-dispatch-macro-character&set-syntax-from-char\cr
-}
-
+\begin{figure}
+\begin{tabular}{ll}
+\texttt{*readtable*} & \texttt{readtable-case}\\
+\texttt{copy-readtable} & \texttt{readtablep}\\
+\texttt{get-dispatch-macro-character} & \texttt{set-dispatch-macro-character}\\
+\texttt{get-macro-character} & \texttt{set-macro-character}\\
+\texttt{make-dispatch-macro-character} & \texttt{set-syntax-from-char}\\
+\end{tabular}
+\caption{\label{readtable-defined-names}
+Readtable defined names}
+\end{figure}
 
 \subsubsection{The Current Readtable}
 
