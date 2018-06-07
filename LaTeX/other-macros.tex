@@ -1,1 +1,110 @@
 \def\newterm#1{\emph{#1}}
+
+\def\instanceofclasses #1{\term{generalized instance} of \theclass{#1}}
+\def\instancesofclasses #1{\term{generalized instances} of \theclass{#1}}
+\def\Instancesofclasses #1{\term{Generalized instances} of \theclass{#1}}
+\def\Theloopconstruct #1{The \macref{loop} \loopref{#1} construct}
+\def\theloopconstruct #1{the \macref{loop} \loopref{#1} construct}
+\def\Theloopkeyword #1{The \macref{loop} \loopref{#1} keyword}
+\def\theloopkeyword #1{the \macref{loop} \loopref{#1} keyword}
+
+\def\thevalueof #1{the \term{value} of \misc{#1}}
+\def\Thevalueof #1{The \term{value} of \misc{#1}}
+\def\thevaluesof #1{the \term{values} of \misc{#1}}
+\def\Thevaluesof #1{The \term{values} of \misc{#1}}
+
+\def\t{\misc{t}}
+\def\nil{\misc{nil}}
+\def\empty{{\tt ()}}
+
+\def\allowotherkeys{{\keyword \&allow-other-keys}}
+\def\aux{{\keyword \&aux}}
+%\def\body {\tt\&body}
+\def\body{{\keyword \&body}}
+\def\environment{{\keyword \&environment}}
+%\def\key #1{\tt\&key #1}
+\def\key{{\keyword \&key}}
+%\def\opt  {\tt\&optional}
+\def\opt{{\keyword \&optional}}
+\def\optional{{\keyword \&optional}}
+%\def\rest {\tt\&rest}
+\def\rest{{\keyword \&rest}}
+\def\whole{{\keyword \&whole}}
+
+\def\clref#1{{\dummy}\hbox{{\function #1\/}}}
+\def\ttref#1{{\dummy}\hbox{{\tt       #1\/}}}
+
+\def\kwd#1{\ttref{:#1}}
+\def\kwdref#1{\ttref{:#1}}
+\def\packref#1{\ttref{\uppercase{#1}}}
+\def\loopref{\ttref}
+
+\def\keyref#1{\clref{\&#1}}
+
+\def\typeref {\clref}
+\def\misc {\clref}
+\def\miscref {\clref}
+\def\declref {\clref}
+\def\funref {\clref}
+\def\macref {\clref}
+\def\specref {\clref}
+\def\conref {\clref}
+\def\varref {\clref}
+
+\def\function{\bbfnine}%%
+\def\dummy{{$ $}}
+
+\def\Seefun #1{See the \term{function} \funref{#1}}
+\def\seefun #1{see the \term{function} \funref{#1}}
+\def\Seefuns #1{See the \term{functions} \funref{#1}}
+\def\seefuns #1{see the \term{functions} \funref{#1}}
+\def\Seespec #1{See the \term{special operator} \specref{#1}}
+\def\seespec #1{see the \term{special operator} \specref{#1}}
+\def\Seemac #1{See the \term{macro} \macref{#1}}
+\def\seemac #1{see the \term{macro} \macref{#1}}
+\def\Seevar #1{See the \term{variable} \varref{#1}}
+\def\seevar #1{see the \term{variable} \varref{#1}}
+\def\Seetype #1{See the \term{type} \typeref{#1}}
+\def\seetype #1{see the \term{type} \typeref{#1}}
+
+\def\Seemisc #1{See \miscref{#1}}
+\def\seemisc #1{see \miscref{#1}}
+
+\def\Seesection#1{See \secref#1}
+\def\seesection#1{see \secref#1}
+
+\def\Seechapter#1{See \chapref#1}
+\def\seechapter#1{see \chapref#1}
+
+\def\Seefigure#1{See \figref#1}
+\def\seefigure#1{see \figref#1}
+
+\def\Seeterm#1{See \term{#1}}
+\def\seeterm#1{see \term{#1}}
+
+\def\SeetermAlso#1{See also \term{#1}}
+\def\seetermAlso#1{see also \term{#1}}
+
+\def\Thenextfigure{Figure INSERT FIGURE REFERENCE}
+\def\thenextfigure{Figure INSERT FIGURE REFERENCE}
+
+\def\idxref#1{\index[xgeneral]{#1}}
+\def\idxkeyref#1{\index[xgeneral]{\&#1}}
+\def\idxcode#1{\index[xcode]{#1}}
+\def\idxkwd#1{\index[xkwd]{#1}}
+\def\idxtext#1{\index[xtext]{#1}}
+\def\idxterm#1{\index[xgloss]{#1}}
+\def\idxpackref#1{\index[xpackages]{#1}}
+
+\def\newterm #1{{\textit{\textbf{#1}}}\idxterm{#1}}
+\def\newtermidx #1#2{{\textit{\textbf{#1}}}\idxterm{#2}}
+
+\def\f#1{{\dummy}\hbox{{\tt #1}}}     % f = fixed
+
+%%% Standards
+
+\def\IEEEFloatingPoint{{\it IEEE Standard for Binary Floating-Point Arithmetic\/}}
+
+\def\IEEEScheme{{\it IEEE Standard for the Scheme Programming Language\/}}
+
+\def\ISOChars{{\rm ISO 6937/2}}
