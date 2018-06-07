@@ -44,7 +44,7 @@ Readtable defined names}
 
 Several \term{readtables} describing different syntaxes can exist,
 but at any given time only one, called the \newterm{current readtable}, 
-affects the way in which \term{expressions}\meaning{2} are parsed 
+affects the way in which \term{expressions}$_2$ are parsed 
 into \term{objects} by the \term{Lisp reader}.
 The \term{current readtable} in a given \term{dynamic environment}
 is \thevalueof{*readtable*} in that \term{environment}.
@@ -76,13 +76,18 @@ to modify the \term{initial readtable}.
 \subsection{Variables that affect the Lisp Reader}
 
 The \term{Lisp reader} is influenced not only by the \term{current readtable},
-but also by various \term{dynamic variables}.  \Thenextfigure\ lists
+but also by various \term{dynamic variables}.  
+\refFig{fig-variables-that-influence-the-lisp-reader} lists
 the \term{variables} that influence the behavior of the \term{Lisp reader}.
 
-\displaythree{Variables that influence the Lisp reader.}{
-*package*&*read-default-float-format*&*readtable*\cr
-*read-base*&*read-suppress*&\cr
-}
+\begin{figure}
+\label{fig-variables-that-influence-the-lisp-reader}
+\begin{tabular}{lll}
+*package*&*read-default-float-format*&*readtable*\\
+*read-base*&*read-suppress*&\\\
+\end{tabular}
+\caption{Variables that influence the Lisp reader.}
+\end{figure}
 
 \subsection{Standard Characters}
 
@@ -100,122 +105,126 @@ the \term{graphic} \term{character} \term{space},
 and the following additional
 ninety-four \term{graphic} \term{characters} or their equivalents:
  
-\tablefigsix{Standard Character Subrepertoire (Part 1 of 3: Latin Characters)}%
-{Graphic ID}{Glyph}{Description}%
-{Graphic ID}{Glyph}{Description}{
+\begin{figure}
+\begin{tabular}{llllll}
+  Graphic ID & Glyph & Desription & Graphic ID & Glyph & Desription\\
   LA01  &  \f{a}  &  small a    &
-  LN01  &  \f{n}  &  small n    \cr
+  LN01  &  \f{n}  &  small n    \\
   LA02  &  \f{A}  &  capital A  &
-  LN02  &  \f{N}  &  capital N  \cr
+  LN02  &  \f{N}  &  capital N  \\
   LB01  &  \f{b}  &  small b    &
-  LO01  &  \f{o}  &  small o    \cr
+  LO01  &  \f{o}  &  small o    \\
   LB02  &  \f{B}  &  capital B  &
-  LO02  &  \f{O}  &  capital O  \cr
+  LO02  &  \f{O}  &  capital O  \\
   LC01  &  \f{c}  &  small c    &
-  LP01  &  \f{p}  &  small p    \cr
+  LP01  &  \f{p}  &  small p    \\
   LC02  &  \f{C}  &  capital C  &
-  LP02  &  \f{P}  &  capital P  \cr
+  LP02  &  \f{P}  &  capital P  \\
   LD01  &  \f{d}  &  small d    &
-  LQ01  &  \f{q}  &  small q    \cr
+  LQ01  &  \f{q}  &  small q    \\
   LD02  &  \f{D}  &  capital D  &
-  LQ02  &  \f{Q}  &  capital Q  \cr
+  LQ02  &  \f{Q}  &  capital Q  \\
   LE01  &  \f{e}  &  small e    &
-  LR01  &  \f{r}  &  small r    \cr
+  LR01  &  \f{r}  &  small r    \\
   LE02  &  \f{E}  &  capital E  &
-  LR02  &  \f{R}  &  capital R  \cr
+  LR02  &  \f{R}  &  capital R  \\
   LF01  &  \f{f}  &  small f    &
-  LS01  &  \f{s}  &  small s    \cr
+  LS01  &  \f{s}  &  small s    \\
   LF02  &  \f{F}  &  capital F  &
-  LS02  &  \f{S}  &  capital S  \cr
+  LS02  &  \f{S}  &  capital S  \\
   LG01  &  \f{g}  &  small g    &
-  LT01  &  \f{t}  &  small t    \cr
+  LT01  &  \f{t}  &  small t    \\
   LG02  &  \f{G}  &  capital G  &
-  LT02  &  \f{T}  &  capital T  \cr
+  LT02  &  \f{T}  &  capital T  \\
   LH01  &  \f{h}  &  small h    &
-  LU01  &  \f{u}  &  small u    \cr
+  LU01  &  \f{u}  &  small u    \\
   LH02  &  \f{H}  &  capital H  &
-  LU02  &  \f{U}  &  capital U  \cr
+  LU02  &  \f{U}  &  capital U  \\
   LI01  &  \f{i}  &  small i    &
-  LV01  &  \f{v}  &  small v    \cr
+  LV01  &  \f{v}  &  small v    \\
   LI02  &  \f{I}  &  capital I  &
-  LV02  &  \f{V}  &  capital V  \cr
+  LV02  &  \f{V}  &  capital V  \\
   LJ01  &  \f{j}  &  small j    &
-  LW01  &  \f{w}  &  small w    \cr
+  LW01  &  \f{w}  &  small w    \\
   LJ02  &  \f{J}  &  capital J  &
-  LW02  &  \f{W}  &  capital W  \cr
+  LW02  &  \f{W}  &  capital W  \\
   LK01  &  \f{k}  &  small k    &
-  LX01  &  \f{x}  &  small x    \cr
+  LX01  &  \f{x}  &  small x    \\
   LK02  &  \f{K}  &  capital K  &
-  LX02  &  \f{X}  &  capital X  \cr
+  LX02  &  \f{X}  &  capital X  \\
   LL01  &  \f{l}  &  small l    &
-  LY01  &  \f{y}  &  small y    \cr
+  LY01  &  \f{y}  &  small y    \\
   LL02  &  \f{L}  &  capital L  &
-  LY02  &  \f{Y}  &  capital Y  \cr
+  LY02  &  \f{Y}  &  capital Y  \\
   LM01  &  \f{m}  &  small m    &
-  LZ01  &  \f{z}  &  small z    \cr
+  LZ01  &  \f{z}  &  small z    \\
   LM02  &  \f{M}  &  capital M  &
-  LZ02  &  \f{Z}  &  capital Z  \cr
-}
+  LZ02  &  \f{Z}  &  capital Z  \\
+\end{tabular}
+\caption{Standard Character Subrepertoire (Part 1 of 3: Latin Characters)}
+\end{figure}
 
-\tablefigsix{Standard Character Subrepertoire (Part 2 of 3: Numeric Characters)}%
-{Graphic ID}{Glyph}{Description}%
-{Graphic ID}{Glyph}{Description}{
+\begin{figure}
+\begin{tabular}{llllll}
+  Graphic ID & Glyph & Desription & Graphic ID & Glyph & Desription\\
   ND01  &  \f{1}  &  digit 1 &
-  ND06  &  \f{6}  &  digit 6 \cr
+  ND06  &  \f{6}  &  digit 6 \\
   ND02  &  \f{2}  &  digit 2 &
-  ND07  &  \f{7}  &  digit 7 \cr
+  ND07  &  \f{7}  &  digit 7 \\
   ND03  &  \f{3}  &  digit 3 &
-  ND08  &  \f{8}  &  digit 8 \cr
+  ND08  &  \f{8}  &  digit 8 \\
   ND04  &  \f{4}  &  digit 4 &
-  ND09  &  \f{9}  &  digit 9 \cr
+  ND09  &  \f{9}  &  digit 9 \\
   ND05  &  \f{5}  &  digit 5 &
-  ND10  &  \f{0}  &  digit 0 \cr
-}
+  ND10  &  \f{0}  &  digit 0 \\
+\end{tabular}
+\caption{Standard Character Subrepertoire (Part 2 of 3: Numeric Characters)}
+\end{figure}
 
-\DefineFigure{StdCharsThree}
-\tablefigthree{Standard Character Subrepertoire (Part 3 of 3: Special Characters)}%
-{Graphic ID}{Glyph}{Description}{
-  SP02  &  \f{!}        &  exclamation mark                        \cr
-  SC03  &  \f{\$}       &  dollar sign                             \cr
-  SP04  &  \f{"}        &  quotation mark, or double quote         \cr
-  SP05  &  \f{'}        &  apostrophe, or \brac{single} quote      \cr
-  SP06  &  \f{(}        &  left parenthesis, or open parenthesis   \cr
-  SP07  &  \f{)}        &  right parenthesis, or close parenthesis \cr
-  SP08  &  \f{,}        &  comma                                   \cr
-  SP09  &  \f{_}        &  low line, or underscore                 \cr
-  SP10  &  \f{-}        &  hyphen, or minus \brac{sign}            \cr
-  SP11  &  \f{.}        &  full stop, period, or dot               \cr
-  SP12  &  \f{/}        &  solidus, or slash                       \cr
-  SP13  &  \f{:}        &  colon                                   \cr
-  SP14  &  \f{;}        &  semicolon                               \cr
-  SP15  &  \f{?}        &  question mark                           \cr
-  SA01  &  \f{+}        &  plus \brac{sign}                        \cr
-  SA03  &  \f{<}        &  less-than \brac{sign}                   \cr
-  SA04  &  \f{=}        &  equals \brac{sign}                      \cr
-  SA05  &  \f{>}        &  greater-than \brac{sign}                \cr
-  SM01  &  \f{\#}       &  number sign, or sharp\brac{sign}        \cr
-  SM02  &  \f{\%}       &  percent \brac{sign}                     \cr
-  SM03  &  \f{\&}       &  ampersand			           \cr
-  SM04  &  \f{*}        &  asterisk, or star                       \cr
-  SM05  &  \f{@}        &  commercial at, or at-sign               \cr
-  SM06  &  \f{[}        &  left \brac{square} bracket              \cr
-  SM07  &  \f{\\}       &  reverse solidus, or backslash           \cr
-  SM08  &  \f{]}        &  right \brac{square} bracket             \cr
-  SM11  &  \f{\{}       &  left curly bracket, or left brace       \cr
-  SM13  &  \f{|}        &  vertical bar                            \cr
-  SM14  &  \f{\}}       &  right curly bracket, or right brace     \cr
-  SD13  &  \f{`}        &  grave accent, or backquote              \cr
-  SD15  &  \f{\hat}     &  circumflex accent                       \cr
-  SD19  &  \f{~}        &  tilde                                   \cr
-}
+\begin{figure}
+\begin{tabular}{lll}
+  Graphic ID & Glyph & Desription \\
+  SP02  &  \f{!}        &  exclamation mark                        \\
+  SC03  &  \f{\$}       &  dollar sign                             \\
+  SP04  &  \f{"}        &  quotation mark, or double quote         \\
+  SP05  &  \f{'}        &  apostrophe, or \brac{single} quote      \\
+  SP06  &  \f{(}        &  left parenthesis, or open parenthesis   \\
+  SP07  &  \f{)}        &  right parenthesis, or close parenthesis \\
+  SP08  &  \f{,}        &  comma                                   \\
+  SP09  &  \f{\_}        &  low line, or underscore                 \\
+  SP10  &  \f{-}        &  hyphen, or minus \brac{sign}            \\
+  SP11  &  \f{.}        &  full stop, period, or dot               \\
+  SP12  &  \f{/}        &  solidus, or slash                       \\
+  SP13  &  \f{:}        &  colon                                   \\
+  SP14  &  \f{;}        &  semicolon                               \\
+  SP15  &  \f{?}        &  question mark                           \\
+  SA01  &  \f{+}        &  plus \brac{sign}                        \\
+  SA03  &  \f{<}        &  less-than \brac{sign}                   \\
+  SA04  &  \f{=}        &  equals \brac{sign}                      \\
+  SA05  &  \f{>}        &  greater-than \brac{sign}                \\
+  SM01  &  \f{\#}       &  number sign, or sharp\brac{sign}        \\
+  SM02  &  \f{\%}       &  percent \brac{sign}                     \\
+  SM03  &  \f{\&}       &  ampersand			           \\
+  SM04  &  \f{*}        &  asterisk, or star                       \\
+  SM05  &  \f{@}        &  commercial at, or at-sign               \\
+  SM06  &  \f{[}        &  left \brac{square} bracket              \\
+  SM07  &  \f{backslash}       &  reverse solidus, or backslash           \\
+  SM08  &  \f{]}        &  right \brac{square} bracket             \\
+  SM11  &  \f{\{}       &  left curly bracket, or left brace       \\
+  SM13  &  \f{|}        &  vertical bar                            \\
+  SM14  &  \f{\}}       &  right curly bracket, or right brace     \\
+  SD13  &  \f{`}        &  grave accent, or backquote              \\
+  SD15  &  \f{circumflex}     &  circumflex accent                       \\
+  SD19  &  \f{~}        &  tilde                                   \\
+\end{tabular}
+\caption{Standard Character Subrepertoire (Part 3 of 3: Special Characters)}
+\end{figure}
 
-The graphic IDs are not used within \clisp,
+The graphic IDs are not used within \commonlisp{},
 but are provided for cross reference purposes with {\ISOChars}.
 Note that the first letter of the graphic ID 
 categorizes the character as follows:
 L---Latin, N---Numeric, S---Special.
-
-\endissue{CHARACTER-PROPOSAL:2-2-1}
 
 \subsection{Character Syntax Types}
 
@@ -236,13 +245,15 @@ When the \term{Lisp reader} is invoked, it reads a single character from
 the \term{input} \term{stream} and dispatches according to the
 \newterm{syntax type} of that \term{character}.
 Every \term{character} that can appear in the \term{input} \term{stream}
-is of one of the \term{syntax types} shown in \figref\PossibleSyntaxTypes.
+is of one of the \term{syntax types} shown in \refFig{PossibleSyntaxTypes}.
 
-\DefineFigure{PossibleSyntaxTypes}
-\showthree{Possible Character Syntax Types}{
-\term{constituent}&\term{macro character}&\term{single escape}\cr
-\term{invalid}&\term{multiple escape}&\term{whitespace}\meaning{2}\cr
-}
+\begin{figure}
+\begin{tabular}{lll}
+\term{constituent}&\term{macro character}&\term{single escape} \\
+\term{invalid}&\term{multiple escape}&\term{whitespace}$_2$\\
+\end{tabular}
+\caption{Possible Character Syntax Types}
+\end{figure}
 
 The \term{syntax type} of a \term{character} in a \term{readtable}
 determines how that character is interpreted by the \term{Lisp reader}
@@ -251,7 +262,7 @@ At any given time, every character has exactly one \term{syntax type}.
 
 %% 22.1.1 4
 %% 2.3.0 5
-\Figref\CharSyntaxTypesInStdSyntax\ 
+\refFig{CharSyntaxTypesInStdSyntax}
 lists the \term{syntax type} of each \term{character} in \term{standard syntax}.
 
 \DefineFigure{CharSyntaxTypesInStdSyntax}
@@ -304,7 +315,7 @@ but they are not used in any standard \commonlisp{} notations.
 %    cascaded/layered/embedded implementations, some of which are conforming
 %    and some of which are not.
 These characters are explicitly reserved to the \term{programmer}.
-\f{~} is not used in \clisp, and reserved to implementors.
+\f{~} is not used in \commonlisp{}, and reserved to implementors.
 \f{\$} and \f{\%} are \term{alphabetic}\meaning{2} \term{characters},
 but are not used in the names of any standard \commonlisp{} \term{defined names}.
 
@@ -353,7 +364,7 @@ These \term{constituent traits} are
      \term{ratio marker},
      \term{exponent marker},
  and \term{invalid}.
-\Figref\ConstituentTraitsOfStdChars\ shows the \term{constituent traits}
+\refFig{ConstituentTraitsOfStdChars} shows the \term{constituent traits}
 of the \term{standard characters}
 and of certain \term{semi-standard} \term{characters};
 % I added this next to clarify.  It effectively says the same thing in SET-SYNTAX-FROM-CHAR.
@@ -368,58 +379,55 @@ otherwise the \term{character} is \term{alphabetic}\meaning{2}.
 Any \term{character} quoted by a \term{single escape} 
 is treated as an \term{alphabetic}\meaning{2} constituent, regardless of its normal syntax.
 
-\DefineFigure{ConstituentTraitsOfStdChars}
-\boxfig
-{\dimen0=.75pc
 \def\a{\term{alphabetic}\meaning{2}}
 \def\ad{alphadigit}
 \def\i{\term{invalid}}
 \def\pm{\term{package marker}}
-\tabskip \dimen0
-\halign to \hsize {#\hfil\tabskip \dimen0&#\hfil\tabskip 0pt plus 1fil
-&#\hfil\tabskip \dimen0&#\hfil\cr
-\noalign{\vskip -9pt}
-\bf constituent&\bf traits&\bf constituent&\bf traits\cr
-\bf character&&\bf character\cr
-\noalign{\vskip 2pt\hrule\vskip 2pt}
-Backspace&\i&\f{\{}&\a\cr
-Tab&\i*&\f{\}}&\a\cr
-Newline&\i*&+&\a, plus sign\cr
-Linefeed&\i*&-&\a, minus sign\cr
-Page&\i*&.&\a, dot, decimal point\cr
-Return&\i*&/&\a, \term{ratio marker}\cr
-Space&\i*&A, a&\ad\cr
-! &\a&B, b&\ad\cr
-{\tt "}&\a*&C, c&\ad\cr
-\#&\a*&D, d&\ad, double-float \term{exponent marker}\cr
-\$&\a&E, e&\ad, float \term{exponent marker}\cr
-\%&\a&F, f&\ad, single-float \term{exponent marker}\cr
-\&&\a&G, g&\ad\cr
-'&\a*&H, h&\ad\cr
-(&\a*&I, i&\ad\cr
-)&\a*&J, j&\ad\cr
-{\tt *}&\a&K, k&\ad\cr
-,&\a*&L, l&\ad, long-float \term{exponent marker}\cr
-0-9&\ad&M, m&\ad\cr
-:&\pm&N, n&\ad\cr
-;&\a*&O, o&\ad\cr
-{\tt<}&\a&P, p&\ad\cr
-=&\a&Q, q&\ad\cr
-{\tt>}&\a&R, r&\ad\cr
-?&\a&S, s&\ad, short-float \term{exponent marker}\cr
-\f{@}&\a&T, t&\ad\cr
-\f{[}&\a&U, u&\ad\cr
-\f{\\}&\a*&V, v&\ad\cr
-\f{]}&\a&W, w&\ad\cr
-\hat&\a&X, x&\ad\cr
-\f{\_}&\a&Y, y&\ad\cr
-`&\a*&Z, z&\ad\cr
-\f{|}&\a*&Rubout&\i\cr
-\f{~}&\a\cr
-\noalign{\vskip -9pt}
-}}
+
+\begin{figure}
+\begin{tabular}{|l|l|l|l|}
+\hline
+constituent & traits & constituent & traits\\
+character && character & \\
+\hline
+Backspace&\i&\f{\{}&\a\\
+Tab&\i*&\f{\}}&\a\\
+Newline&\i*&+&\a, plus sign\\
+Linefeed&\i*&-&\a, minus sign\\
+Page&\i*&.&\a, dot, decimal point\\
+Return&\i*&/&\a, \term{ratio marker}\\
+Space&\i*&A, a&\ad\\
+! &\a&B, b&\ad\\
+{\tt "}&\a*&C, c&\ad\\
+\#&\a*&D, d&\ad, double-float \term{exponent marker}\\
+\$&\a&E, e&\ad, float \term{exponent marker}\\
+\%&\a&F, f&\ad, single-float \term{exponent marker}\\
+\&&\a&G, g&\ad\\
+'&\a*&H, h&\ad\\
+(&\a*&I, i&\ad\\
+)&\a*&J, j&\ad\\
+{\tt *}&\a&K, k&\ad\\
+,&\a*&L, l&\ad, long-float \term{exponent marker}\\
+0-9&\ad&M, m&\ad\\
+:&\pm&N, n&\ad\\
+;&\a*&O, o&\ad\\
+{\tt<}&\a&P, p&\ad\\
+=&\a&Q, q&\ad\\
+{\tt>}&\a&R, r&\ad\\
+?&\a&S, s&\ad, short-float \term{exponent marker}\\
+\f{@}&\a&T, t&\ad\\
+\f{[}&\a&U, u&\ad\\
+\f{\\}&\a*&V, v&\ad\\
+\f{]}&\a&W, w&\ad\\
+\hat&\a&X, x&\ad\\
+\f{\_}&\a&Y, y&\ad\\
+`&\a*&Z, z&\ad\\
+\f{|}&\a*&Rubout&\i\\
+\f{~}&\a\\
+\hline
+\end{tabular}
 \caption{Constituent Traits of Standard Characters and Semi-Standard Characters}
-\endfig
+\end{figure}
                    
 The interpretations in this table apply only to \term{characters}
 whose \term{syntax type} is \term{constituent}.
