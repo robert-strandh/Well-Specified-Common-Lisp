@@ -265,55 +265,44 @@ At any given time, every character has exactly one \term{syntax type}.
 \refFig{CharSyntaxTypesInStdSyntax}
 lists the \term{syntax type} of each \term{character} in \term{standard syntax}.
 
-\DefineFigure{CharSyntaxTypesInStdSyntax}
-%% 22.1.1 36
-{\def\w{\term{whitespace}\meaning{2}}
-\def\n{\term{non-terminating} \term{macro char}} %cheat on "char" => "character" to make fit
 \def\t{\term{terminating} \term{macro char}}     %ditto
 \def\c{\term{constituent}}
 \def\C{\term{constituent}*}
 \def\SE{\term{single escape}}
 \def\ME{\term{multiple escape}}
-\tablefigfour{Character Syntax Types in Standard Syntax}{character}{syntax type}{character}{syntax type}{
-Backspace&\c&0--9&\c\cr
-Tab&\w&:&\c\cr
-Newline&\w&;&\t\cr
-Linefeed&\w&{\tt<}&\c\cr
-Page&\w&=&\c\cr
-Return&\w&{\tt>}&\c\cr
-Space&\w&?&\C\cr
-!&\C&{\tt @}&\c\cr
-{\tt"}&\t&A--Z&\c\cr
-\#&\n&\f{[}&\C\cr
-\$&\c&\f{\\}&\SE\cr
-\%&\c&\f{]}&\C\cr
-\&&\c&\hat&\c\cr
-'&\t&\f{\_}&\c\cr
-(&\t&`&\t\cr
-)&\t&a--z&\c\cr
-{\tt*}&\c&\f{\{}&\C\cr
-+&\c&\f{|}&\ME\cr
-,&\t&\f{\}}&\C\cr
--&\c&\f{~}&\c\cr
-.&\c&Rubout&\c\cr
-/&\c\cr
-}}
+\def\w{\term{whitespace}}
 
-%% The next two paragraphs were mutually redundant, so I collapsed them into one. -kmp 17-Jan-92
+\begin{figure}
+\begin{tabular}{llll}
+{character}{syntax type}{character}{syntax type}\\
+Backspace&\c&0--9&\c\\
+Tab&\w&:&\c\\
+Newline&\w&;&\t\\
+Linefeed&\w&{\tt<}&\c\\
+Page&\w&=&\c\\
+Return&\w&{\tt>}&\c\\
+Space&\w&?&\C\\
+!&\C&{\tt @}&\c\\
+{\tt"}&\t&A--Z&\c\\
+\#&\n&\f{[}&\C\\
+\$&\c&\f{\\}&\SE\\
+\%&\c&\f{]}&\C\\
+\&&\c&\hat&\c\\
+'&\t&\f{\_}&\c\\
+(&\t&`&\t\\
+)&\t&a--z&\c\\
+{\tt*}&\c&\f{\{}&\C\\
++&\c&\f{|}&\ME\\
+,&\t&\f{\}}&\C\\
+-&\c&\f{~}&\c\\
+.&\c&Rubout&\c\\
+/&\c\\
+\end{tabular}
+\caption{Character Syntax Types in Standard Syntax}\\
+\end{figure}
+
 The characters marked with an asterisk (*) are initially \term{constituents},
-% but are reserved to the user for use as \term{macro characters} or for any other
-% desired purpose.
-%                     
-% Brackets (\f{[} and \f{]}),
-% braces   (\f{\{}, \f{\}}),
-% question mark (\f{?}),
-% and exclamation point (\f{!})
-% are defined to be constituents, 
 but they are not used in any standard \commonlisp{} notations.
-%!!! Maybe make a glossary term out of "reserved to the programmer"
-%    and discuss the issue of who the "programmer" is in the face of
-%    cascaded/layered/embedded implementations, some of which are conforming
-%    and some of which are not.
 These characters are explicitly reserved to the \term{programmer}.
 \f{~} is not used in \commonlisp{}, and reserved to implementors.
 \f{\$} and \f{\%} are \term{alphabetic}\meaning{2} \term{characters},
