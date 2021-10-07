@@ -1,1 +1,572 @@
-../dpANS/concept-syntax.tex
+%-*- Mode: TeX -*-
+%% Character Syntax
+
+%% 2.2.1 1
+%% 2.2.1 2
+%% 22.1.5 1
+
+The \term{Lisp reader} takes \term{characters} from a \term{stream}, 
+interprets them as a printed representation of an \term{object},
+constructs that \term{object}, and returns it.
+
+The syntax described by this chapter is called the \newterm{standard syntax}.
+Operations are provided by \commonlisp{} so that
+various aspects of the syntax information represented by a \term{readtable} 
+can be modified under program control; \seechap{chapter-reader}
+Except as explicitly stated otherwise, 
+the syntax used throughout this document is \term{standard syntax}.
+
+\subsection{Readtables}
+\label{subsection-character-syntax-readtables}
+
+Syntax information for use by the \term{Lisp reader} is embodied in an
+\term{object} called a \newterm{readtable}.  Among other things, 
+the \term{readtable} contains the association between \term{characters} 
+and \term{syntax types}.
+
+\refFig{readtable-defined-names}
+lists some \term{defined names} that are applicable to
+\term{readtables}.
+
+\begin{figure}
+\begin{tabular}{ll}
+\texttt{*readtable*} & \texttt{readtable-case}\\
+\texttt{copy-readtable} & \texttt{readtablep}\\
+\texttt{get-dispatch-macro-character} & \texttt{set-dispatch-macro-character}\\
+\texttt{get-macro-character} & \texttt{set-macro-character}\\
+\texttt{make-dispatch-macro-character} & \texttt{set-syntax-from-char}\\
+\end{tabular}
+\caption{\label{readtable-defined-names}
+Readtable defined names}
+\end{figure}
+
+\subsubsection{The Current Readtable}
+
+Several \term{readtables} describing different syntaxes can exist,
+but at any given time only one, called the \newterm{current readtable}, 
+affects the way in which \term{expressions}$_2$ are parsed 
+into \term{objects} by the \term{Lisp reader}.
+The \term{current readtable} in a given \term{dynamic environment}
+is \thevalueof{*readtable*} in that \term{environment}.
+To make a different \term{readtable} become the \term{current readtable},
+\varref{*readtable*} can be \term{assigned} or \term{bound}.
+
+\subsubsection{The Standard Readtable}
+
+The \newterm{standard readtable} conforms to \term{standard syntax}.
+The consequences are undefined if an attempt is made
+to modify the \term{standard readtable}.
+%% 22.1.5 3
+To achieve the effect of altering or extending \term{standard syntax},
+a copy of the \term{standard readtable} can be created; \seefun{copy-readtable}.
+
+The \term{readtable case} of the \term{standard readtable} is \kwd{upcase}.
+
+\subsubsection{The Initial Readtable}
+
+The \newterm{initial readtable} is
+the \term{readtable} that is the \term{current readtable}
+at the time when the \term{Lisp image} starts.
+At that time, it conforms to \term{standard syntax}.
+The \term{initial readtable} is \term{distinct} 
+from the \term{standard readtable}.
+It is permissible for a \term{conforming program} 
+to modify the \term{initial readtable}.
+
+\subsection{Variables that affect the Lisp Reader}
+
+The \term{Lisp reader} is influenced not only by the \term{current readtable},
+but also by various \term{dynamic variables}.  
+\refFig{fig-variables-that-influence-the-lisp-reader} lists
+the \term{variables} that influence the behavior of the \term{Lisp reader}.
+
+\begin{figure}
+\label{fig-variables-that-influence-the-lisp-reader}
+\begin{tabular}{lll}
+*package*&*read-default-float-format*&*readtable*\\
+*read-base*&*read-suppress*&\\\
+\end{tabular}
+\caption{Variables that influence the Lisp reader.}
+\end{figure}
+
+\subsection{Standard Characters}
+
+%% Redundant.
+% \commonlisp{} \term{characters} are used for writing programs 
+% that can be read by a \commonlisp{} implementation, and for data.
+\issue{CHARACTER-PROPOSAL:2-2-1}
+All \term{implementations} must support a \term{character} \term{repertoire}
+called \typeref{standard-char}; \term{characters} that are members of that
+\term{repertoire} are called \newtermidx{standard characters}{standard character}.
+
+The \typeref{standard-char} \term{repertoire} consists of
+the \term{non-graphic} \term{character} \term{newline},
+the \term{graphic} \term{character} \term{space},
+and the following additional
+ninety-four \term{graphic} \term{characters} or their equivalents:
+ 
+\begin{figure}
+\begin{tabular}{llllll}
+  Graphic ID & Glyph & Desription & Graphic ID & Glyph & Desription\\
+  LA01  &  \f{a}  &  small a    &
+  LN01  &  \f{n}  &  small n    \\
+  LA02  &  \f{A}  &  capital A  &
+  LN02  &  \f{N}  &  capital N  \\
+  LB01  &  \f{b}  &  small b    &
+  LO01  &  \f{o}  &  small o    \\
+  LB02  &  \f{B}  &  capital B  &
+  LO02  &  \f{O}  &  capital O  \\
+  LC01  &  \f{c}  &  small c    &
+  LP01  &  \f{p}  &  small p    \\
+  LC02  &  \f{C}  &  capital C  &
+  LP02  &  \f{P}  &  capital P  \\
+  LD01  &  \f{d}  &  small d    &
+  LQ01  &  \f{q}  &  small q    \\
+  LD02  &  \f{D}  &  capital D  &
+  LQ02  &  \f{Q}  &  capital Q  \\
+  LE01  &  \f{e}  &  small e    &
+  LR01  &  \f{r}  &  small r    \\
+  LE02  &  \f{E}  &  capital E  &
+  LR02  &  \f{R}  &  capital R  \\
+  LF01  &  \f{f}  &  small f    &
+  LS01  &  \f{s}  &  small s    \\
+  LF02  &  \f{F}  &  capital F  &
+  LS02  &  \f{S}  &  capital S  \\
+  LG01  &  \f{g}  &  small g    &
+  LT01  &  \f{t}  &  small t    \\
+  LG02  &  \f{G}  &  capital G  &
+  LT02  &  \f{T}  &  capital T  \\
+  LH01  &  \f{h}  &  small h    &
+  LU01  &  \f{u}  &  small u    \\
+  LH02  &  \f{H}  &  capital H  &
+  LU02  &  \f{U}  &  capital U  \\
+  LI01  &  \f{i}  &  small i    &
+  LV01  &  \f{v}  &  small v    \\
+  LI02  &  \f{I}  &  capital I  &
+  LV02  &  \f{V}  &  capital V  \\
+  LJ01  &  \f{j}  &  small j    &
+  LW01  &  \f{w}  &  small w    \\
+  LJ02  &  \f{J}  &  capital J  &
+  LW02  &  \f{W}  &  capital W  \\
+  LK01  &  \f{k}  &  small k    &
+  LX01  &  \f{x}  &  small x    \\
+  LK02  &  \f{K}  &  capital K  &
+  LX02  &  \f{X}  &  capital X  \\
+  LL01  &  \f{l}  &  small l    &
+  LY01  &  \f{y}  &  small y    \\
+  LL02  &  \f{L}  &  capital L  &
+  LY02  &  \f{Y}  &  capital Y  \\
+  LM01  &  \f{m}  &  small m    &
+  LZ01  &  \f{z}  &  small z    \\
+  LM02  &  \f{M}  &  capital M  &
+  LZ02  &  \f{Z}  &  capital Z  \\
+\end{tabular}
+\caption{Standard Character Subrepertoire (Part 1 of 3: Latin Characters)}
+\end{figure}
+
+\begin{figure}
+\begin{tabular}{llllll}
+  Graphic ID & Glyph & Desription & Graphic ID & Glyph & Desription\\
+  ND01  &  \f{1}  &  digit 1 &
+  ND06  &  \f{6}  &  digit 6 \\
+  ND02  &  \f{2}  &  digit 2 &
+  ND07  &  \f{7}  &  digit 7 \\
+  ND03  &  \f{3}  &  digit 3 &
+  ND08  &  \f{8}  &  digit 8 \\
+  ND04  &  \f{4}  &  digit 4 &
+  ND09  &  \f{9}  &  digit 9 \\
+  ND05  &  \f{5}  &  digit 5 &
+  ND10  &  \f{0}  &  digit 0 \\
+\end{tabular}
+\caption{Standard Character Subrepertoire (Part 2 of 3: Numeric Characters)}
+\end{figure}
+
+\begin{figure}
+\begin{tabular}{lll}
+  Graphic ID & Glyph & Desription \\
+  SP02  &  \f{!}        &  exclamation mark                        \\
+  SC03  &  \f{\$}       &  dollar sign                             \\
+  SP04  &  \f{"}        &  quotation mark, or double quote         \\
+  SP05  &  \f{'}        &  apostrophe, or \brac{single} quote      \\
+  SP06  &  \f{(}        &  left parenthesis, or open parenthesis   \\
+  SP07  &  \f{)}        &  right parenthesis, or close parenthesis \\
+  SP08  &  \f{,}        &  comma                                   \\
+  SP09  &  \f{\_}        &  low line, or underscore                 \\
+  SP10  &  \f{-}        &  hyphen, or minus \brac{sign}            \\
+  SP11  &  \f{.}        &  full stop, period, or dot               \\
+  SP12  &  \f{/}        &  solidus, or slash                       \\
+  SP13  &  \f{:}        &  colon                                   \\
+  SP14  &  \f{;}        &  semicolon                               \\
+  SP15  &  \f{?}        &  question mark                           \\
+  SA01  &  \f{+}        &  plus \brac{sign}                        \\
+  SA03  &  \f{<}        &  less-than \brac{sign}                   \\
+  SA04  &  \f{=}        &  equals \brac{sign}                      \\
+  SA05  &  \f{>}        &  greater-than \brac{sign}                \\
+  SM01  &  \f{\#}       &  number sign, or sharp\brac{sign}        \\
+  SM02  &  \f{\%}       &  percent \brac{sign}                     \\
+  SM03  &  \f{\&}       &  ampersand			           \\
+  SM04  &  \f{*}        &  asterisk, or star                       \\
+  SM05  &  \f{@}        &  commercial at, or at-sign               \\
+  SM06  &  \f{[}        &  left \brac{square} bracket              \\
+  SM07  &  \f{backslash}       &  reverse solidus, or backslash           \\
+  SM08  &  \f{]}        &  right \brac{square} bracket             \\
+  SM11  &  \f{\{}       &  left curly bracket, or left brace       \\
+  SM13  &  \f{|}        &  vertical bar                            \\
+  SM14  &  \f{\}}       &  right curly bracket, or right brace     \\
+  SD13  &  \f{`}        &  grave accent, or backquote              \\
+  SD15  &  \f{circumflex}     &  circumflex accent                       \\
+  SD19  &  \f{~}        &  tilde                                   \\
+\end{tabular}
+\caption{Standard Character Subrepertoire (Part 3 of 3: Special Characters)}
+\end{figure}
+
+The graphic IDs are not used within \commonlisp{},
+but are provided for cross reference purposes with {\ISOChars}.
+Note that the first letter of the graphic ID 
+categorizes the character as follows:
+L---Latin, N---Numeric, S---Special.
+
+\subsection{Character Syntax Types}
+
+%% 22.1.1 1
+
+The \term{Lisp reader} constructs an \term{object} 
+from the input text by interpreting each \term{character} 
+according to its \term{syntax type}.
+The \term{Lisp reader} cannot accept as input 
+everything that the \term{Lisp printer} produces,
+and the \term{Lisp reader} has features that are not used by the \term{Lisp printer}.
+The \term{Lisp reader} can be used as a lexical analyzer 
+for a more general user-written parser.
+
+%% 22.1.1 2
+%% 22.1.1 3
+When the \term{Lisp reader} is invoked, it reads a single character from 
+the \term{input} \term{stream} and dispatches according to the
+\newterm{syntax type} of that \term{character}.
+Every \term{character} that can appear in the \term{input} \term{stream}
+is of one of the \term{syntax types} shown in \refFig{PossibleSyntaxTypes}.
+
+\begin{figure}
+\begin{tabular}{lll}
+\term{constituent}&\term{macro character}&\term{single escape} \\
+\term{invalid}&\term{multiple escape}&\term{whitespace}$_2$\\
+\end{tabular}
+\caption{Possible Character Syntax Types}
+\end{figure}
+
+The \term{syntax type} of a \term{character} in a \term{readtable}
+determines how that character is interpreted by the \term{Lisp reader}
+while that \term{readtable} is the \term{current readtable}.
+At any given time, every character has exactly one \term{syntax type}.
+
+%% 22.1.1 4
+%% 2.3.0 5
+\refFig{CharSyntaxTypesInStdSyntax}
+lists the \term{syntax type} of each \term{character} in \term{standard syntax}.
+
+\def\t{\term{terminating} \term{macro char}}     %ditto
+\def\c{\term{constituent}}
+\def\C{\term{constituent}*}
+\def\SE{\term{single escape}}
+\def\ME{\term{multiple escape}}
+\def\w{\term{whitespace}}
+\def\n{\term{non-terminating} {macro char}}
+
+\begin{figure}
+\begin{tabular}{llll}
+{character}{syntax type}{character}{syntax type}\\
+Backspace&\c&0--9&\c\\
+Tab&\w&:&\c\\
+Newline&\w&;&\t\\
+Linefeed&\w&{\tt<}&\c\\
+Page&\w&=&\c\\
+Return&\w&{\tt>}&\c\\
+Space&\w&?&\C\\
+!&\C&{\tt @}&\c\\
+{\tt"}&\t&A--Z&\c\\
+\#&\n&\f{[}&\C\\
+\$&\c&\f{\\}&\SE\\
+\%&\c&\f{]}&\C\\
+\&&\c&\hat&\c\\
+'&\t&\f{\_}&\c\\
+(&\t&`&\t\\
+)&\t&a--z&\c\\
+{\tt*}&\c&\f{\{}&\C\\
++&\c&\f{|}&\ME\\
+,&\t&\f{\}}&\C\\
+-&\c&\f{~}&\c\\
+.&\c&Rubout&\c\\
+/&\c\\
+\end{tabular}
+\caption{Character Syntax Types in Standard Syntax}\\
+\end{figure}
+
+The characters marked with an asterisk (*) are initially \term{constituents},
+but they are not used in any standard \commonlisp{} notations.
+These characters are explicitly reserved to the \term{programmer}.
+\f{~} is not used in \commonlisp{}, and reserved to implementors.
+\f{\$} and \f{\%} are \term{alphabetic}\meaning{2} \term{characters},
+but are not used in the names of any standard \commonlisp{} \term{defined names}.
+
+\term{Whitespace}\meaning{2} characters serve as separators but are otherwise
+ignored.  \term{Constituent} and \term{escape} \term{characters} are accumulated
+to make a \term{token}, which is then interpreted as a \term{number} or \term{symbol}.
+\term{Macro characters} trigger the invocation of \term{functions} (possibly
+user-supplied) that can perform arbitrary parsing actions.
+\term{Macro characters} are divided into two kinds,
+\term{terminating} and \term{non-terminating},
+depending on whether or not they terminate a \term{token}.
+The following are descriptions of each kind of \term{syntax type}.
+
+\subsubsection{Constituent Characters}
+
+\term{Constituent} \term{characters} are used in \term{tokens}.
+%% Sandra didn't like this wording, and wanted "representation of" added. -kmp 19-Nov-91
+%A \term{token} is a \term{number} or a \term{symbol} name.
+A \newterm{token} is a representation of a \term{number} or a \term{symbol}.  
+Examples of \term{constituent} \term{characters} are letters and digits.
+
+%% 2.3.0 6
+Letters in symbol names are sometimes converted to 
+letters in the opposite \term{case} when the name is read;
+\seesection\ReadtableCaseReadEffect.
+\term{Case} conversion can be suppressed by the use 
+of \term{single escape} or \term{multiple escape} characters.
+%% Moved to the section "Case in Symbols" -kmp 25-Jan-92
+% The \term{symbols} that correspond to \commonlisp{} \term{defined names}
+% have uppercase names even though their names generally appear
+% in lowercase in this document.
+
+\subsubsection{Constituent Traits}
+
+Every \term{character} has one or more \term{constituent traits}
+that define how the \term{character} is to be interpreted by the \term{Lisp reader}
+when the \term{character} is a \term{constituent} \term{character}.
+These \term{constituent traits} are 
+     \term{alphabetic}\meaning{2},                  
+     digit,
+     \term{package marker},
+     plus sign,
+     minus sign, 
+     dot,
+     decimal point,
+     \term{ratio marker},
+     \term{exponent marker},
+ and \term{invalid}.
+\refFig{ConstituentTraitsOfStdChars} shows the \term{constituent traits}
+of the \term{standard characters}
+and of certain \term{semi-standard} \term{characters};
+% I added this next to clarify.  It effectively says the same thing in SET-SYNTAX-FROM-CHAR.
+% -kmp 28-Jan-92
+no mechanism is provided for changing the \term{constituent trait} of a \term{character}.
+Any \term{character} with the alphadigit \term{constituent trait}
+in that figure is a digit if the \term{current input base} is greater
+than that character's digit value,
+otherwise the \term{character} is \term{alphabetic}\meaning{2}.  
+%\term{Alphabetic}\meaning{2} \term{constituents} are valid
+%\term{characters} for \term{symbol} \term{names}.  
+Any \term{character} quoted by a \term{single escape} 
+is treated as an \term{alphabetic}\meaning{2} constituent, regardless of its normal syntax.
+
+\def\a{\term{alphabetic}\meaning{2}}
+\def\ad{alphadigit}
+\def\i{\term{invalid}}
+\def\pm{\term{package marker}}
+
+\begin{figure}
+\begin{tabular}{|l|l|l|l|}
+\hline
+constituent & traits & constituent & traits\\
+character && character & \\
+\hline
+Backspace&\i&\f{\{}&\a\\
+Tab&\i*&\f{\}}&\a\\
+Newline&\i*&+&\a, plus sign\\
+Linefeed&\i*&-&\a, minus sign\\
+Page&\i*&.&\a, dot, decimal point\\
+Return&\i*&/&\a, \term{ratio marker}\\
+Space&\i*&A, a&\ad\\
+! &\a&B, b&\ad\\
+{\tt "}&\a*&C, c&\ad\\
+\#&\a*&D, d&\ad, double-float \term{exponent marker}\\
+\$&\a&E, e&\ad, float \term{exponent marker}\\
+\%&\a&F, f&\ad, single-float \term{exponent marker}\\
+\&&\a&G, g&\ad\\
+'&\a*&H, h&\ad\\
+(&\a*&I, i&\ad\\
+)&\a*&J, j&\ad\\
+{\tt *}&\a&K, k&\ad\\
+,&\a*&L, l&\ad, long-float \term{exponent marker}\\
+0-9&\ad&M, m&\ad\\
+:&\pm&N, n&\ad\\
+;&\a*&O, o&\ad\\
+{\tt<}&\a&P, p&\ad\\
+=&\a&Q, q&\ad\\
+{\tt>}&\a&R, r&\ad\\
+?&\a&S, s&\ad, short-float \term{exponent marker}\\
+\f{@}&\a&T, t&\ad\\
+\f{[}&\a&U, u&\ad\\
+\f{\\}&\a*&V, v&\ad\\
+\f{]}&\a&W, w&\ad\\
+\hat&\a&X, x&\ad\\
+\f{\_}&\a&Y, y&\ad\\
+`&\a*&Z, z&\ad\\
+\f{|}&\a*&Rubout&\i\\
+\f{~}&\a\\
+\hline
+\end{tabular}
+\caption{Constituent Traits of Standard Characters and Semi-Standard Characters}
+\end{figure}
+                   
+The interpretations in this table apply only to \term{characters}
+whose \term{syntax type} is \term{constituent}.
+Entries marked with an asterisk (*) are normally \term{shadowed}\meaning{2} 
+because the indicated \term{characters} are of \term{syntax type}
+\term{whitespace}\meaning{2},
+\term{macro character},
+\term{single escape},
+or \term{multiple escape};
+these \term{constituent traits} apply to them only if their \term{syntax types} 
+are changed to \term{constituent}.
+
+\subsubsection{Invalid Characters}
+
+\term{Characters} with the \term{constituent trait} \term{invalid} 
+cannot ever appear in a \term{token} 
+except under the control of a \term{single escape} \term{character}.
+If an \term{invalid} \term{character} is encountered while an \term{object} is
+being read, an error \oftype{reader-error} is signaled.
+If an \term{invalid} \term{character} is preceded by a \term{single escape} \term{character},
+it is treated as an \term{alphabetic}\meaning{2} \term{constituent} instead.
+
+\subsubsection{Macro Characters}
+
+When the \term{Lisp reader} encounters a \term{macro character} 
+on an \term{input} \term{stream},
+special parsing of subsequent \term{characters} 
+on the \term{input} \term{stream} 
+is performed.
+
+A \term{macro character} has an associated \term{function}
+called a \newterm{reader macro function} that implements its specialized parsing behavior.
+An association of this kind can be established or modified under control of
+a \term{conforming program} by using 
+\thefunctions{set-macro-character} and \funref{set-dispatch-macro-character}.
+
+Upon encountering a \term{macro character}, the \term{Lisp reader} calls its
+\term{reader macro function}, which parses one specially formatted object 
+from the \term{input} \term{stream}.
+The \term{function} either returns the parsed \term{object},
+or else it returns no \term{values} 
+    to indicate that the characters scanned by the \term{function}
+    are being ignored (\eg in the case of a comment).
+Examples of \term{macro characters}
+are \term{backquote}, \term{single-quote}, \term{left-parenthesis}, and 
+\term{right-parenthesis}.
+
+A \term{macro character} is either \term{terminating} or \term{non-terminating}.
+The difference between \term{terminating} and \term{non-terminating} \term{macro characters} 
+lies in what happens when such characters occur in the middle of a \term{token}.  
+If a \newterm{non-terminating} \term{macro character} occurs in the middle of a \term{token},
+the \term{function} associated 
+with the \term{non-terminating} \term{macro character} is not called,
+and the
+\term{non-terminating} \term{macro character} does not terminate the \term{token}'s name; it
+becomes part of the name as if the \term{macro character} were really a constituent
+character.  A \newterm{terminating} \term{macro character} terminates any \term{token},
+and its associated \term{reader macro function}
+is called no matter where the \term{character} appears.
+The only \term{non-terminating} \term{macro character} in \term{standard syntax} 
+is \term{sharpsign}.
+
+If a \term{character} is a \term{dispatching macro character} $C\sub 1$,
+its \term{reader macro function} is a \term{function} supplied by the \term{implementation}.
+This \term{function} reads decimal \term{digit} \term{characters} until a non-\term{digit}
+$C\sub 2$ is read.
+If any \term{digits} were read,
+they are converted into a corresponding \term{integer} infix parameter $P$;
+otherwise, the infix parameter $P$ is \nil.  
+The terminating non-\term{digit} $C\sub 2$ is a \term{character} 
+(sometimes called a ``sub-character'' to emphasize its subordinate role in the dispatching)
+that is looked up in the dispatch table associated with
+the \term{dispatching macro character} $C\sub 1$.
+The \term{reader macro function} associated with the sub-character $C\sub 2$ 
+is invoked with three arguments:
+     the \term{stream},
+     the sub-character $C\sub 2$,
+ and the infix parameter $P$.
+For more information about dispatch characters,
+\seefun{set-dispatch-macro-character}.
+
+For information about the \term{macro characters} 
+that are available in \term{standard syntax},
+\seesection\StandardMacroChars.
+
+\subsubsection{Multiple Escape Characters}
+
+A pair of \newterm{multiple escape} \term{characters}
+is used to indicate that an enclosed sequence of characters,
+including possible \term{macro characters} and \term{whitespace}\meaning{2} \term{characters},
+are to be treated as \term{alphabetic}\meaning{2} \term{characters} 
+with \term{case} preserved.
+Any \term{single escape} and \term{multiple escape} \term{characters} 
+that are to appear in the sequence must be preceded by a \term{single escape} 
+\term{character}.  
+
+\term{Vertical-bar} is a \term{multiple escape} \term{character}
+in \term{standard syntax}.
+
+\subsubsubsection{Examples of Multiple Escape Characters}
+
+\code
+ ;; The following examples assume the readtable case of *readtable* 
+ ;; and *print-case* are both :upcase.
+ (eq 'abc 'ABC) \EV \term{true}
+ (eq 'abc '|ABC|) \EV \term{true}
+ (eq 'abc 'a|B|c) \EV \term{true}
+ (eq 'abc '|abc|) \EV \term{false}
+\endcode
+
+\subsubsection{Single Escape Character}
+
+A \newterm{single escape} is used to indicate that 
+the next \term{character} is to be treated as 
+an \term{alphabetic}\meaning{2} \term{character}
+with its \term{case} preserved,
+no matter what the \term{character} is 
+or which \term{constituent traits} it has.  
+
+%% "slash" => "backslash" as an editorial change per Boyer/Kaufmann/Moore #4.
+%% This was right everywhere else in the manual--shame for it to be wrong here.
+%% -kmp 9-May-94
+\term{Backslash} is a \term{single escape} \term{character} in \term{standard syntax}.
+
+\subsubsubsection{Examples of Single Escape Characters}
+
+\code
+ ;; The following examples assume the readtable case of *readtable* 
+ ;; and *print-case* are both :upcase.
+ (eq 'abc '\\A\\B\\C) \EV \term{true}
+ (eq 'abc 'a\\Bc) \EV \term{true}
+ (eq 'abc '\\ABC) \EV \term{true}
+ (eq 'abc '\\abc) \EV \term{false}
+\endcode
+
+\subsubsection{Whitespace Characters}
+
+\term{Whitespace}\meaning{2} \term{characters} are used to separate \term{tokens}.
+
+\term{Space} and \term{newline} are \term{whitespace}\meaning{2} \term{characters}
+in \term{standard syntax}.
+
+\subsubsubsection{Examples of Whitespace Characters}
+
+\code
+ (length '(this-that)) \EV 1
+ (length '(this - that)) \EV 3
+ (length '(a
+           b)) \EV 2
+ (+ 34) \EV 34
+ (+ 3 4) \EV 7
+\endcode

@@ -18,6 +18,13 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage{shadow}
 \usepackage{hyperref}
+\RequirePackage{index}
+\newindex{xpackages}{pdx}{pnd}{Index of packages}
+\newindex{xgeneral}{rdx}{rnd}{General index}
+\newindex{xcode}{cdx}{cnd}{Index of character sequences}
+\newindex{xkwd}{kdx}{knd}{Index of keword symbols}
+\newindex{xtext}{tdx}{tnd}{Index of significant phrases}
+\newindex{xgloss}{gdx}{gnd}{Glossary}
 \setlength\sdim{2mm}
 
 \floatplacement{figure}{!htbp}
@@ -55,6 +62,8 @@
 \inputtex{refmacros.tex}
 \inputtex{spec-macros.tex}
 \inputtex{other-macros.tex}
+\inputtex{setup-cmfont.tex}
+\inputtex{setup-tables.tex}
 
 \newenvironment{itemize0}{
 \begin{itemize}
@@ -83,7 +92,7 @@ Well Specified Common Lisp.}
 
 \author{Robert Strandh}
 
-\date{2013}
+\date{2018}
 
 \makeindex
 \begin{document}
@@ -93,17 +102,20 @@ Well Specified Common Lisp.}
 
 \newpage
 
-\input setup
-
 {\setlength{\parskip}{0cm}
-\tableofcontents}
+%%\tableofcontents}
 
 \inputtex{chapter-2.tex}
 
 \bibliography{sicl}{}
 \bibliographystyle{alpha}
 
-\printindex
+\printindex[gloss]
+\printindex[xgeneral]
+\printindex[xpackages]
+\printindex[xcode]
+\printindex[xkwd]
+\printindex[xtext]
 
 \end{document}
 
