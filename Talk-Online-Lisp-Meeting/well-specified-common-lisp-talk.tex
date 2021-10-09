@@ -104,6 +104,31 @@
 }
 
 \frame{
+\frametitle{Example: \texttt{aref}}
+\vskip 0.25cm
+In the ``Arguments and Values'' section of the dictionary entry, the
+standard says about the first argument: ``\textit{array} -- an \textit{array}''.
+\vskip 0.25cm
+In the ``Exceptional Situations'' section, it says: ``None''.
+\vskip 0.25cm
+So what happens if \textit{array} is not an \textit{array}, say if
+someone calls \texttt{(aref '(a b c) 0)}?
+}
+
+\frame{
+\frametitle{Example: \texttt{aref}}
+\vskip 0.25cm
+The answer is in section 1.4.4.3 entitled: The ``Arguments and
+Values'' Section of a Dictionary Entry.
+\vskip 0.25cm
+``An English language description of what arguments the operator
+accepts and what values it returns...''
+\vskip 0.25cm
+``Except as explicitly specified otherwise, the consequences are
+undefined if these type restrictions are violated.'' 
+}
+
+\frame{
 \frametitle{Well Specified \commonlisp{} (WSCL)}
 https://github.com/robert-strandh/Well-Specified-Common-Lisp
 https://github.com/s-expressionists/wscl
