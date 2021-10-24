@@ -143,6 +143,19 @@ located.
 }
 
 \frame{
+  \frametitle{Example: \texttt{(setf slot-value)}}
+\vskip 0.25cm
+The dictionary entry says ``Function SLOT-VALUE'', rather than
+``Accessor SLOT-VALUE'', which means that \texttt{slot-value} can not
+be used with \texttt{setf}, and there is no syntax given with
+\texttt{setf} as is the norm for other accessors.
+\vskip 0.25cm
+But then, the ``Description:'' section says ``The macro \texttt{setf}
+can be used with \texttt{slot-value} to change the value of a
+\emph{slot}.
+}
+
+\frame{
 \frametitle{Well Specified \commonlisp{} (WSCL)}
 https://github.com/robert-strandh/Well-Specified-Common-Lisp
 https://github.com/s-expressionists/wscl
