@@ -129,6 +129,20 @@ undefined if these type restrictions are violated.''
 }
 
 \frame{
+  \frametitle{Example: \texttt{go}}
+\vskip 0.25cm
+In the ``Description:'' section of the dictionary entry, the
+standard says:
+\vskip 0.25cm
+``The consequences are undefined if there is no matching \emph{tag}
+lexically visible  to the point of the \texttt{go}.''
+\vskip 0.25cm
+It is just silly to make this situation undefined, since any compiler
+must detect this situation to find where the appropriate tag is
+located.
+}
+
+\frame{
 \frametitle{Well Specified \commonlisp{} (WSCL)}
 https://github.com/robert-strandh/Well-Specified-Common-Lisp
 https://github.com/s-expressionists/wscl
